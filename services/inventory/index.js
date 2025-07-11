@@ -20,8 +20,15 @@ server.addService(inventoryProto.InventoryService.service, {
             products: products,
         });
     },
-});
 
+    SearchProductByID: (payload, callback) => {
+        // Busca o produto pelo ID recebido no payload.request.id
+        const result = products.find((product) => product.id == payload.request.id);
+
+        callback(null, result);
+    },
+});
+    
 server.bindAsync('127.0.0.1:3002', grpc.ServerCredentials.createInsecure(), () => {
     console.log('Inventory Service running at http://127.0.0.1:3002');
     server.start();
